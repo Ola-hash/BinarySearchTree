@@ -1,7 +1,3 @@
-import javafx.scene.Parent;
-
-import java.util.TreeSet;
-
 public class BinarySearchTree<T extends Comparable<T>> {
 
     private Node<T> root;
@@ -68,7 +64,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         if (nodeToDelete == null) {
             return false;
         }
-        if (nodeToDelete.getLeft() == null && nodeToDelete.getRight() == null) {// sytuacja jak usuwany element nie ma dzieci
+        if (nodeToDelete.getLeft() == null && nodeToDelete.getRight() == null) {
             Node<T> parent = nodeToDelete.getParent();
             if (nodeToDelete == root) {
                 root = null;
@@ -121,7 +117,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return parent.getRight() == node;
     }
 
-    public void printTree(Node<T> node) {
+    private void printTree(Node<T> node) {
         if (node == null) {
             return;
         }
@@ -130,23 +126,58 @@ public class BinarySearchTree<T extends Comparable<T>> {
         printTree(node.getRight());
     }
 
-    public void findMax(Node<T> node) {
-        if (node.getLeft() == null && node.getRight() == null) {
-            System.out.println(node.getKey());
-        } else if (node.getLeft() != null && node.getRight() == null) {
-            System.out.println(node.getKey());
-        } else if (node.getLeft() == null && node.getRight() != null) {
-            while (node.getRight() != null) {
-                node = node.getRight();
-            }
-            System.out.println(node.getKey());
-        } else if (node.getLeft() != null && node.getRight() != null) {
-            while (node.getRight() != null) {
-                node = node.getRight();
-            }
-            System.out.println(node.getKey());
-        }
+    public void printTree() {
+        printTree(root);
+    }
 
+    private T findMax(Node<T> node) {
+        while (node.getRight() != null) {
+            node = node.getRight();
+        }
+        return node.getKey();
+    }
+
+    public T findMax() {
+        if (root == null) {
+            return null;
+        }
+        return findMax(root);
+    }
+
+    private T findMaxRekurencja(Node<T> node) {
+        if (node.getRight() == null) {
+            return node.getKey();
+        }
+        return findMaxRekurencja(node.getRight());
+    }
+
+    public T findMaxRekurencja() {
+        return findMaxRekurencja(root);
+    }
+
+    private T findMin(Node<T> node) {
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+        return node.getKey();
+    }
+
+    public T findMin() {
+        if (root == null) {
+            return null;
+        }
+        return findMin(root);
+    }
+
+    private T findMinRekurencja(Node<T> node) {
+        if (node.getLeft() == null) {
+            return node.getKey();
+        }
+        return findMinRekurencja(node.getLeft());
+    }
+
+    public T findMinRekurencja() {
+        return findMinRekurencja(root);
     }
 
 }
